@@ -1,7 +1,8 @@
-        <div class="col-md-12">
+        <?php if (!isset($judul)) { $judul = 'Pengaturan'; } ?>
+<div class="col-md-12">
             <div class="card card-outline card-primary">
               <div class="card-header">
-                <h3 class="card-title"><?= $judul ?></h3>
+                <h3 class="card-title"><?=$judul?></h3>
 
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -13,7 +14,13 @@
               <!-- /.card-header -->
               <div class="card-body">
                 
-                <?php 
+                <?php                 if (!isset($spbu)) {
+                    $spbu = [
+                        'nama_spbu' => '',
+                        'coordinat_wilayah' => '0,0',
+                        'zoom_view' => 13,
+                    ];
+                }
                 if (session()->getFlashdata('pesan')) {
                     echo '<div class="alert alert-success alert-dismissible">
                   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>

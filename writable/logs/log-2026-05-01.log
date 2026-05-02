@@ -1,0 +1,80 @@
+CRITICAL - 2026-05-01 23:33:21 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "v_wilayah.php"
+[Method: GET, Route: admin/wilayah]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(228): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('v_wilayah.php')
+ 2 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('v_wilayah', [], true)
+ 3 APPPATH\Views\v_template_back_end.php(189): view('v_wilayah')
+ 4 SYSTEMPATH\View\View.php(240): include('C:\\laragon\\www\\gis-spbu-ci4\\app\\Views\\v_template_back_end.php')
+ 5 SYSTEMPATH\View\View.php(243): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 6 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('v_template_back_end', [], true)
+ 7 APPPATH\Controllers\Wilayah.php(22): view('v_template_back_end', [...])
+ 8 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Wilayah->index()
+ 9 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Wilayah))
+10 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-05-01 23:33:24 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "v_wilayah.php"
+[Method: GET, Route: admin/wilayah]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(228): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('v_wilayah.php')
+ 2 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('v_wilayah', [], true)
+ 3 APPPATH\Views\v_template_back_end.php(189): view('v_wilayah')
+ 4 SYSTEMPATH\View\View.php(240): include('C:\\laragon\\www\\gis-spbu-ci4\\app\\Views\\v_template_back_end.php')
+ 5 SYSTEMPATH\View\View.php(243): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 6 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('v_template_back_end', [], true)
+ 7 APPPATH\Controllers\Wilayah.php(22): view('v_template_back_end', [...])
+ 8 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Wilayah->index()
+ 9 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Wilayah))
+10 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-05-01 23:36:19 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "v_wilayah.php"
+[Method: GET, Route: admin/wilayah]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(228): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('v_wilayah.php')
+ 2 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('v_wilayah', [], true)
+ 3 APPPATH\Views\v_template_back_end.php(189): view('v_wilayah')
+ 4 SYSTEMPATH\View\View.php(240): include('C:\\laragon\\www\\gis-spbu-ci4\\app\\Views\\v_template_back_end.php')
+ 5 SYSTEMPATH\View\View.php(243): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 6 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('v_template_back_end', [], true)
+ 7 APPPATH\Controllers\Wilayah.php(22): view('v_template_back_end', [...])
+ 8 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Wilayah->index()
+ 9 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Wilayah))
+10 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-05-01 23:36:24 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "v_wilayah.php"
+[Method: GET, Route: admin/wilayah]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(228): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('v_wilayah.php')
+ 2 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('v_wilayah', [], true)
+ 3 APPPATH\Views\v_template_back_end.php(189): view('v_wilayah')
+ 4 SYSTEMPATH\View\View.php(240): include('C:\\laragon\\www\\gis-spbu-ci4\\app\\Views\\v_template_back_end.php')
+ 5 SYSTEMPATH\View\View.php(243): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 6 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('v_template_back_end', [], true)
+ 7 APPPATH\Controllers\Wilayah.php(22): view('v_template_back_end', [...])
+ 8 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Wilayah->index()
+ 9 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Wilayah))
+10 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-05-01 23:36:27 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "v_wilayah.php"
+[Method: GET, Route: admin/wilayah]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(228): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('v_wilayah.php')
+ 2 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('v_wilayah', [], true)
+ 3 APPPATH\Views\v_template_back_end.php(189): view('v_wilayah')
+ 4 SYSTEMPATH\View\View.php(240): include('C:\\laragon\\www\\gis-spbu-ci4\\app\\Views\\v_template_back_end.php')
+ 5 SYSTEMPATH\View\View.php(243): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 6 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('v_template_back_end', [], true)
+ 7 APPPATH\Controllers\Wilayah.php(22): view('v_template_back_end', [...])
+ 8 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Wilayah->index()
+ 9 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Wilayah))
+10 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
