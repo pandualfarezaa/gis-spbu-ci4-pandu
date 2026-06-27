@@ -37,13 +37,20 @@
                     <td><?= $value['nama_user'] ?></td>
                     <td><?= $value['email'] ?></td>
                     <td><small class="text-muted"><?= $value['password'] ?></small></td>
+                   <td class="text-center">
+    <!-- 🟢 Diubah dari 'foto user' menjadi 'foto_user' -->
+    <img src="<?= base_url('foto/' . $value['foto_user']) ?>" width="50px" height="50px" class="img-circle">
+</td>
                     <td class="text-center">
-                        <img src="<?= base_url('foto/' . $value['foto user']) ?>" width="50px" height="50px" class="img-circle">
-                    </td>
-                    <td class="text-center">
-                        <button class="btn btn-xs btn-warning btn-flat"><i class="fas fa-pencil-alt"></i></button>
-                        <button class="btn btn-xs btn-danger btn-flat"><i class="fas fa-trash"></i></button>
-                    </td>
+    <!-- Tombol Edit -->
+    <a href="<?= base_url('admin/user/edit/' . $value['id_user']) ?>" class="btn btn-xs btn-warning btn-flat">
+        <i class="fas fa-pencil-alt"></i>
+    </a>
+    <!-- Tombol Hapus -->
+    <a href="<?= base_url('admin/user/hapus/' . $value['id_user']) ?>" class="btn btn-xs btn-danger btn-flat" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')">
+        <i class="fas fa-trash"></i>
+    </a>
+</td>
                 </tr>
                 <?php } ?>  
                 </tbody>
