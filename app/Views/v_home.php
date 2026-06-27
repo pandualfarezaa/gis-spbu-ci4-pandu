@@ -1,55 +1,53 @@
 <div id="map" style="width: 100%; height: 800px;"></div>
 
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
 <script>
-    // 🔹 OSM (Default)
-    var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    // 🔹 Provider peta sesuai struktur nama di layar tutor (peta1, peta2, dst)
+    var peta1 = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap'
     });
 
-    // 🔹 Satellite (ESRI)
-    var satellite = L.tileLayer(
-        'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-        { attribution: 'Tiles © Esri' }
-    );
-
-    // 🔹 Street (Carto Light - beda dari OSM)
-    var street = L.tileLayer(
-        'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
-        { attribution: '© Carto' }
-    );
-
-    // 🔹 Night / Dark Mode
-    var night = L.tileLayer(
-        'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
-        { attribution: '© Carto' }
-    );
-
-    // 🔹 Init Map
-    var map = L.map('map', {
-        center: [-7.261740816260255, 109.01797393820488],
-        zoom: 12,
-        layers: [osm] // default
+    var peta2 = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { 
+        attribution: 'Tiles © Esri' 
     });
 
-    // 🔹 Layer Control
+    var peta3 = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { 
+        attribution: '© Carto' 
+    });
+
+    var peta4 = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { 
+        attribution: '© Carto' 
+    });
+
+    // 🔹 Inisialisasi Map (Sekarang sudah murni menggunakan data dari tbl_setting)
+    var map = L.map('map', {
+        center: [<?= $web['coordinat_wilayah'] ?>], // Mengambil '-7.2778279, 109.0188789' dari database
+        zoom: <?= $web['zoom_view'] ?>, // Mengambil angka 12 dari database
+        layers: [peta2] 
+    });
+
+    // 🔹 Pengelompokan Layer Control Sesuai Teks Layar Tutor
     var baseMaps = {
-        "OSM": osm,
-        "Satellite": satellite,
-        "Street": street,
-        "Night": night
+        'OpenStreetMap': peta1,
+        'Satellite': peta2,
+        'Streets': peta3,
+        'Night': peta4,
     };
 
-    L.control.layers(baseMaps).addTo(map);
+    // 🔹 Memasukkan kontrol pilihan ke peta
+    var layerControl = L.control.layers(baseMaps).addTo(map);
 
-    // 🔹 Marker contoh
-    L.marker([-7.261740816260255, 109.01797393820488])
-        .addTo(map)
-        .bindPopup("Lokasi Awal")
-        .openPopup();
+    <?php foreach (isset($wilayah) ? $wilayah : [] as $key => $value) { ?>
+ L.geoJSON(<?= $value['geojson'] ?>, {
+        style: function(feature) {
+            return {
+                color: '<?= $value['warna'] ?>',
+                weight: 2,
+                fillColor: '<?= $value['warna'] ?>',
+                fillOpacity: 0.5
+            };
+        }
+    }).addTo(map).bindPopup("<b><?= $value['nama_wilayah'] ?></b>");
+<?php } ?>
+
+
 </script>
-
-
-

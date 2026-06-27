@@ -23,4 +23,18 @@ class ModelWilayah extends Model
                 ->where('id_wilayah', $id_wilayah)
                 ->get()->getRowArray();
    }
+      public function UpdateData($data)
+   {
+        $this->db->table('tbl_wilayah')
+            ->where('id_wilayah', $data['id_wilayah'])
+            ->update($data);
+   }
+   public function DeleteData($data)
+{
+    // Cek apakah nama tabelnya benar 'wilayah'
+    // Cek apakah nama primary key-nya benar 'id_wilayah'
+    return $this->db->table('tbl_wilayah') // Ganti 'tbl_wilayah' dengan nama tabelmu
+                    ->where('id_wilayah', $data['id_wilayah'])
+                    ->delete();
+}
 }

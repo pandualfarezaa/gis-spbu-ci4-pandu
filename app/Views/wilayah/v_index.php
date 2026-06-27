@@ -4,7 +4,7 @@
                 <h3 class="card-title"><?= isset($judul) ? $judul : 'Dashboard' ?></h3>
 
                 <div class="card-tools">
-                  <a href="<?= base_url('wilayah/input') ?>" class="btn btn-flat btn-primary btn-sm">
+                  <a href="<?= base_url('admin/wilayah/input') ?>" class="btn btn-flat btn-primary btn-sm">
                     <i class="fas fa-plus"></i> Tambah
                   </a>
                 </div>
@@ -13,11 +13,21 @@
               <!-- /.card-header -->
               <div class="card-body">
                 <?php 
+                //notif insert data
                 if (session()->getFlashdata('insert')) {
                     echo '<div class="alert alert-success alert-dismissible">
                   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                   <h5><i class="icon fas fa-check"></i>';
                     echo session()->getFlashdata('insert');
+                    echo '</h5></div>';
+                }
+
+                 //notif update data
+                if (session()->getFlashdata('update')) {
+                    echo '<div class="alert alert-info alert-dismissible">
+                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                  <h5><i class="icon fas fa-info"></i>';
+                    echo session()->getFlashdata('update');
                     echo '</h5></div>';
                 }
                 ?>
@@ -31,21 +41,23 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $no = 1;
-                            foreach (isset($wilayah) ? $wilayah : [] as $key => $value) { ?>
-                            <tr>
-                                <td><?= $no++ ?></td>
-                                <td><?= $value['nama_wilayah'] ?></td>
-                                <td style="background-color: <?= $value['warna'] ?>;">&nbsp;</td>
-                                <td class="text-center">
-                                    <a href="<?= base_url('admin/wilayah/edit/' . $value['id_wilayah']) ?>" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
-                                    <a href="<?= base_url('admin/wilayah/delete/' . $value['id_wilayah']) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Data Ini ?')"><i class="fas fa-trash"></i></a>
-                                    <td>
-                                        <a href="<?=  base_url('wilayah/edit/' . $value['id_wilayah']) ?>" class="btn btn-sm btn-warning btn-flat"><i class="fas fa-pencil-alt"></i></a>
-                                        <a href="<?= base_url('wilayah/delete/' . $value['id_wilayah']) ?>" class="btn btn-sm btn-danger btn-flat" onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Data Ini ?')"><i class="fas fa-trash"></i></a>
-                                    </td>
-                             </tr>
-                              <?php } ?>  
+                        <?php $no = 1;
+                        foreach (isset($wilayah) ? $wilayah : [] as $key => $value) { ?>
+                        <tr>
+                            <td class="text-center"><?= $no++ ?></td>
+                            <td><?= $value['nama_wilayah'] ?></td>
+                            <td style="background-color: <?= $value['warna'] ?>;">&nbsp;</td>
+                            <td class="text-center">
+                              <a href="<?= base_url('admin/wilayah/edit/' . $value['id_wilayah']) ?>" class="btn btn-sm btn-warning btn-flat">
+                                <i class="fas fa-pencil-alt"></i>
+                            </a>
+                            <a href="<?= base_url('admin/wilayah/delete/' . $value['id_wilayah']) ?>" class="btn btn-sm btn-danger btn-flat" onclick="return confirm('Yakin hapus?')">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                                </a>
+                            </td>
+                        </tr>
+                        <?php } ?>  
                         </tbody>
                     </table>
               </div>

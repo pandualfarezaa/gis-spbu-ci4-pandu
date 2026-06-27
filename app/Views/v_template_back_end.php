@@ -15,7 +15,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="<?= base_url('AdminLTE') ?>/plugins/fontawesome-free/css/all.min.css">
    <!-- Bootstrap Color Picker -->
   <link rel="stylesheet" href="<?= base_url('AdminLTE') ?>/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
-    <!-- DataTables -->
+   <!-- Select2 -->
+  <link rel="stylesheet" href="<?= base_url('AdminLTE') ?>/plugins/select2/css/select2.min.css">
+  <link rel="stylesheet" href="<?= base_url('AdminLTE') ?>/plugins/select2-bootstrap4-theme/select2-bootstrap4.theme.min.css">
+  <!-- DataTables -->
   <link rel="stylesheet" href="<?= base_url('AdminLTE') ?>/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="<?= base_url('AdminLTE') ?>/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   <link rel="stylesheet" href="<?= base_url('AdminLTE') ?>/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
@@ -30,6 +33,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="<?= base_url('AdminLTE') ?>/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="<?= base_url('AdminLTE') ?>/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Select2 -->
+<script src="<?= base_url('AdminLTE') ?>/plugins/select2/js/select2.full.min.js"></script>
 <!-- bootstrap color picker -->
 <script src="<?= base_url('AdminLTE') ?>/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
 <!-- DataTables  & Plugins -->
@@ -85,7 +90,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <a href="<?= base_url('Admin')?>" class="brand-link">
       <img src="<?= base_url('AdminLTE') ?>/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">GIS SPBU</span>
     </a>
@@ -98,7 +103,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <img src="<?= base_url('AdminLTE') ?>/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="#" class="d-block">Pandu Alfa Reza</a>
         </div>
       </div>
 
@@ -120,7 +125,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="<?= base_url('admin') ?>" class="nav-link">
+            <a href="<?= base_url('admin') ?>" class="nav-link <?= $menu == 'dashboard' ? 'active' : '' ?>">
              <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -129,7 +134,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </li>
 
              <li class="nav-item">
-            <a href="<?= base_url('admin/wilayah') ?>" class="nav-link">
+            <a href="<?= base_url('admin/wilayah') ?>" class="nav-link <?= $menu == 'wilayah' ? 'active' : '' ?>">
              <i class="nav-icon fas fa-layer-group"></i>
               <p>
                 Wilayah
@@ -137,33 +142,35 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
           </li>
 
-          <li class="nav-item menu-open">
-            <a href="#" class="nav-link active">
-              
-              <i class="nav-icon fas fa-th"></i>
+           <li class="nav-item">
+            <a href="<?= base_url('admin/jenis') ?>" class="nav-link <?= $menu == 'jenis_spbu' ? 'active' : '' ?>">
+             <i class="nav-icon fas fa-gas-pump"></i>
               <p>
-                Starter Pages
-                <i class="right fas fa-angle-left"></i>
+                Jenis SPBU
               </p>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="#" class="nav-link active">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Active Page</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Inactive Page</p>
-                </a>
-              </li>
-            </ul>
+          </li>
+
+           <li class="nav-item">
+            <a href="<?= base_url('admin/spbu') ?>" class="nav-link <?= $menu == 'spbu' ? 'active' : '' ?>">
+             <i class="nav-icon fas fa-gas-pump"></i>
+              <p>
+                SPBU
+              </p>
+            </a>
           </li>
 
           <li class="nav-item">
-            <a href="<?= base_url('admin/setting') ?>" class="nav-link">
+            <a href="<?= base_url('admin/user') ?>" class="nav-link <?= $menu == 'user' ? 'active' : '' ?>">
+              <i class="nav-icon fas fa-users"></i>
+              <p>
+               User
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="<?= base_url('admin/setting') ?>" class="nav-link <?= $menu == 'setting' ? 'active' : '' ?>">
               <i class="nav-icon fas fa-cogs"></i>
               <p>
                Setting
@@ -171,15 +178,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
           </li>
 
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Simple Link
-                <span class="right badge badge-danger">New</span>
-              </p>
-            </a>
-          </li>
+
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
