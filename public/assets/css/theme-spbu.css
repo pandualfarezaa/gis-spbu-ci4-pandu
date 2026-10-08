@@ -1,0 +1,304 @@
+/* =========================================================
+   THEME SPBU — dipakai bersama oleh frontend & backend
+   Ganti nilai di :root untuk mengubah seluruh tema sekaligus.
+   ========================================================= */
+:root {
+  --red: #E31B23;
+  --red-dark: #A30F17;
+  --blue: #0054A6;
+  --blue-dark: #003D7A;
+  --green: #8DC63F;
+  --ink: #1F2430;
+  --muted: #6B7280;
+  --paper: #FFFFFF;
+  --surface: #F4F6F9;
+  --border: #E7E9EE;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--ink);
+}
+
+h1, h2, h3, h4, h5, h6,
+.brand-title, .brand-text, .content-header h1 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+@keyframes rail-shimmer {
+  0%   { background-position: 0% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes ping-ring {
+  0%   { transform: scale(0.9); opacity: 0.45; }
+  80%  { transform: scale(1.6); opacity: 0; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+/* ===== NAVBAR (frontend & backend) — putih + rel tri-warna ===== */
+.bg-pertamina-red,
+.main-header.navbar-white {
+  background: #fff !important;
+  border-bottom: none !important;
+  position: relative;
+  box-shadow: 0 2px 14px rgba(20,22,28,0.07);
+}
+.bg-pertamina-red::after,
+.main-header.navbar-white::after {
+  content: "";
+  position: absolute;
+  bottom: -3px; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--red), var(--blue), var(--green), var(--red));
+  background-size: 200% 100%;
+  animation: rail-shimmer 12s linear infinite;
+}
+
+.main-header .nav-link { color: var(--ink) !important; transition: color 0.2s ease; }
+.main-header .nav-link:hover { color: var(--red) !important; }
+.main-header .nav-link[href*="logout"] { font-weight: 600; }
+
+/* Brand title */
+.brand-title {
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+}
+.brand-title .accent { color: var(--red); }
+.brand-title small {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  color: var(--muted) !important;
+  letter-spacing: 0;
+}
+
+/* Logo + ping ring */
+.brand-ping-wrap, .brand-image-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.brand-ping-wrap { width: 42px; height: 42px; }
+.brand-ping-wrap img, .brand-image-wrap img {
+  position: relative;
+  z-index: 2;
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 50%;
+}
+.brand-ping-wrap img { padding: 2px; height: 42px; width: 42px; }
+.brand-ping-wrap::before, .brand-image-wrap::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid var(--red);
+  opacity: 0;
+  animation: ping-ring 3s cubic-bezier(0.2, 0.6, 0.4, 1) infinite;
+}
+
+/* Nav links garis bawah gradient */
+.navbar-dark .navbar-nav .nav-link {
+  color: var(--ink) !important;
+  font-weight: 600;
+  font-size: 0.94rem;
+  padding: 8px 14px !important;
+  margin: 0 2px;
+  position: relative;
+  transition: color 0.2s ease;
+}
+.navbar-dark .navbar-nav .nav-link::after {
+  content: "";
+  position: absolute;
+  left: 14px; right: 14px;
+  bottom: 2px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--red), var(--blue));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.navbar-dark .navbar-nav .nav-link:hover::after,
+.navbar-dark .navbar-nav .nav-link[aria-expanded="true"]::after { transform: scaleX(1); }
+.navbar-dark .navbar-nav .nav-link:hover { color: var(--red) !important; }
+
+/* Dropdown */
+.dropdown-menu {
+  border: none !important;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 14px 32px rgba(20,22,28,0.14);
+  padding: 6px;
+  min-width: 230px;
+  display: block;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transform-origin: top left;
+  transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), visibility 0.2s;
+  margin-top: 10px !important;
+  border-top: 3px solid var(--accent, var(--blue)) !important;
+}
+.dropdown.show .dropdown-menu, .dropdown-menu.show {
+  opacity: 1; visibility: visible; transform: translateY(0);
+}
+.dropdown-item {
+  display: flex !important;
+  align-items: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--ink);
+  border-radius: 8px;
+  padding: 8px 10px !important;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+.dropdown-item:hover {
+  background-color: var(--surface) !important;
+  color: var(--ink) !important;
+  transform: translateX(3px);
+}
+.item-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  margin-right: 10px;
+  flex-shrink: 0;
+  background: color-mix(in srgb, var(--accent, var(--blue)) 12%, white);
+  color: var(--accent, var(--blue));
+  font-size: 0.8rem;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.dropdown-item:hover .item-icon { background: var(--accent, var(--blue)); color: #fff; }
+.dropdown-divider { margin: 6px 4px; border-color: var(--border); }
+
+/* Tombol portal admin */
+.btn-portal-admin {
+  background: var(--red) !important;
+  color: #fff !important;
+  font-weight: 700;
+  border-radius: 8px;
+  border: none;
+  padding: 8px 20px !important;
+  transition: all 0.2s ease-in-out;
+  display: inline-block;
+}
+.btn-portal-admin:hover {
+  background: var(--red-dark) !important;
+  color: #fff !important;
+  box-shadow: 0 6px 16px rgba(163,15,23,0.28);
+  transform: translateY(-1px);
+}
+
+.navbar-collapse.collapsing, .navbar-collapse.collapse { transition: height 0.3s ease; }
+.navbar-toggler { border-color: var(--border) !important; }
+
+/* ===== SIDEBAR ADMIN ===== */
+.main-sidebar, .content-wrapper, .main-footer {
+  transition: margin-left 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+.main-sidebar.sidebar-light-primary {
+  background: #fff !important;
+  box-shadow: 2px 0 14px rgba(20,22,28,0.06);
+  border-right: 1px solid var(--border);
+}
+.brand-link { border-bottom: 1px solid var(--border) !important; display: flex; align-items: center; }
+.user-panel { border-bottom: 1px solid var(--border) !important; }
+.user-panel .info a { color: var(--ink) !important; font-weight: 600; }
+
+.nav-sidebar .nav-link {
+  color: var(--ink) !important;
+  opacity: 0.75;
+  border-radius: 8px;
+  margin: 2px 8px;
+  padding: 9px 12px;
+  transition: background-color 0.2s ease, color 0.2s ease, padding-left 0.2s ease, opacity 0.2s ease;
+  border-left: 3px solid transparent;
+}
+.nav-sidebar .nav-link .nav-icon { color: var(--muted); transition: color 0.2s ease; }
+.nav-sidebar .nav-link:hover {
+  background-color: var(--surface) !important;
+  color: var(--ink) !important;
+  opacity: 1;
+  padding-left: 16px;
+}
+.nav-sidebar .nav-link:hover .nav-icon { color: var(--blue); }
+.nav-sidebar .nav-link.active {
+  background: linear-gradient(90deg, rgba(227,27,35,0.10), rgba(227,27,35,0.01)) !important;
+  color: var(--red-dark) !important;
+  opacity: 1;
+  border-left: 3px solid var(--red);
+  font-weight: 700;
+}
+.nav-sidebar .nav-link.active .nav-icon { color: var(--red); }
+
+.sidebar-search-form .form-control-sidebar {
+  background: var(--surface); border: 1px solid var(--border); color: var(--ink);
+}
+.sidebar-search-form .form-control-sidebar::placeholder { color: var(--muted); }
+.btn-sidebar { background: var(--surface); color: var(--muted); border: 1px solid var(--border); }
+
+/* ===== KONTEN ===== */
+.content-wrapper { background-color: var(--surface) !important; }
+.content-header h1 { font-weight: 700; color: var(--ink); font-size: 1.5rem; }
+.breadcrumb { background: transparent; }
+.breadcrumb-item a { color: var(--blue); font-weight: 600; }
+.breadcrumb-item.active { color: var(--muted); }
+
+.card {
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(20,22,28,0.06);
+}
+.card-header {
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+  border-radius: 10px 10px 0 0 !important;
+}
+
+.btn-primary { background-color: var(--blue) !important; border-color: var(--blue) !important; }
+.btn-primary:hover { background-color: var(--blue-dark) !important; border-color: var(--blue-dark) !important; }
+.btn-danger { background-color: var(--red) !important; border-color: var(--red) !important; }
+.btn-danger:hover { background-color: var(--red-dark) !important; border-color: var(--red-dark) !important; }
+
+/* ===== FOOTER ===== */
+.main-footer {
+  background: #fff;
+  color: var(--muted);
+  border-top: none;
+  position: relative;
+}
+.main-footer::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--red), var(--blue), var(--green));
+}
+.main-footer strong { color: var(--ink); }
+.main-footer a { color: var(--blue) !important; font-weight: 600; }
+
+/* ===== PETA — supaya tile Leaflet tidak terasa "mentah" ===== */
+.leaflet-tile-pane { filter: grayscale(0.12) contrast(1.04) saturate(1.05); }
+.leaflet-popup-content-wrapper {
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(20,22,28,0.16);
+}
+.leaflet-popup-content { font-family: 'Inter', sans-serif; color: var(--ink); }
+.leaflet-popup-tip { box-shadow: none; }
+.spbu-marker-pin {
+  width: 34px; height: 34px;
+  border-radius: 50% 50% 50% 0;
+  background: var(--red);
+  transform: rotate(-45deg);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 10px rgba(163,15,23,0.35);
+  border: 2px solid #fff;
+}
+.spbu-marker-pin i { transform: rotate(45deg); color: #fff; font-size: 15px; }
