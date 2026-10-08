@@ -29,7 +29,7 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Warna Wilayah</label>
-                            <input name="warna" value="<?= old('warna') ?>" class="form-control my-colorpicker1" placeholder="Warna Wilayah" required>
+                            <input name="warna" value="<?= old('warna') ?>" class="form-control my-colorpicker1" placeholder="Klik untuk memilih warna" required>
                             <p class="text-danger">
                                 <?= \Config\Services::validation()->getError('warna') ?>
                             </p>
@@ -54,9 +54,12 @@
     </div>
 </div>
 
+<!-- PERBAIKAN: pakai window 'load' supaya jQuery & plugin colorpicker sudah selesai dimuat oleh layout -->
 <script>
-//Colorpicker
-$('.my-colorpicker1').colorpicker()
-//color picker with addon
-$('.my-colorpicker2').colorpicker()
+window.addEventListener('load', function() {
+    // Colorpicker
+    $('.my-colorpicker1').colorpicker();
+    // Colorpicker dengan addon
+    $('.my-colorpicker2').colorpicker();
+});
 </script>

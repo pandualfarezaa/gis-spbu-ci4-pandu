@@ -39,4 +39,13 @@ class ModelUser extends Model
             ->where('id_user', $data['id_user'])
             ->delete(); // 🟢 Sesuai menit 10:26 tanpa $data di dalam kurung delete
     }
+
+    public function loginUser($email, $password)
+{
+    return $this->db->table('tbl_user')
+        ->where([
+            'email'    => $email,
+            'password' => sha1($password), // Menyesuaikan dengan SHA-1 di databasemu
+        ])->get()->getRowArray();
+}
 }

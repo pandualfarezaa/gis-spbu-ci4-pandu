@@ -4,7 +4,7 @@
             <h3 class="card-title"><?= isset($judul) ? $judul : 'Edit Data SPBU' ?></h3>
         </div>
         <div class="card-body">
-            
+
             <?php if (session()->getFlashdata('validation')): ?>
                 <div class="alert alert-danger alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -13,7 +13,7 @@
                 </div>
             <?php endif; ?>
 
-            <!-- 🟢 Action diarahkan ke rute update data, dan sertakan enctype untuk foto -->
+            <!-- Action diarahkan ke rute update data, dan sertakan enctype untuk foto -->
             <form action="<?= base_url('admin/spbu/updatedata/' . $spbu['id_spbu']) ?>" method="post" enctype="multipart/form-data">
 
                 <div class="row">
@@ -28,14 +28,13 @@
                         <div class="form-group">
                             <label>Jenis SPBU</label>
                             <select name="id_jenis" class="form-control select2" style="width: 100%;">
-    <option value="">--Pilih Jenis SPBU--</option>
-    <?php foreach ($jenis as $key => $value) { ?>
-        <!-- 🟢 PERBAIKAN: Ganti $value['nama_jenis'] menjadi $value['jenis'] -->
-        <option value="<?= $value['id_jenis'] ?>" <?= old('id_jenis', $spbu['id_jenis']) == $value['id_jenis'] ? 'selected' : '' ?>>
-            <?= $value['jenis'] ?>
-        </option>
-    <?php } ?>
-</select>
+                                <option value="">--Pilih Jenis SPBU--</option>
+                                <?php foreach ($jenis as $key => $value) { ?>
+                                    <option value="<?= $value['id_jenis'] ?>" <?= old('id_jenis', $spbu['id_jenis']) == $value['id_jenis'] ? 'selected' : '' ?>>
+                                        <?= $value['jenis'] ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
                         </div>
                     </div>
 
@@ -131,8 +130,10 @@
 </div>
 
 <!-- Script Berantai AJAX Dropdown -->
+<!-- PERBAIKAN: pakai window 'load' supaya jQuery & select2 sudah selesai dimuat oleh layout -->
 <script>
-  $(document).ready(function() {
+window.addEventListener('load', function() {
+
     $('.select2').select2();
     $('.select2bs4').select2({ theme: 'bootstrap4' });
 
@@ -142,14 +143,14 @@
     var id_kec_old = "<?= $spbu['id_kecamatan'] ?>";
     var id_wil_old = "<?= $spbu['id_wilayah'] ?>";
 
-    if(id_prov_old != "") {
+    if (id_prov_old != "") {
         $.ajax({
             type: "POST",
             url: "<?= base_url('admin/spbu/kabupaten') ?>",
             data: { id_provinsi: id_prov_old },
             success: function(response) {
                 $('#id_kabupaten').html(response).val(id_kab_old).trigger('change');
-                
+
                 // Load kecamatan setelah kabupaten terisi
                 $.ajax({
                     type: "POST",
@@ -183,7 +184,7 @@
     // Event ketika Kabupaten diubah manual oleh user
     $('#id_kabupaten').change(function() {
         var id_kabupaten = $('#id_kabupaten').val();
-        if(id_kabupaten != "") {
+        if (id_kabupaten != "") {
             $.ajax({
                 type: "POST",
                 url: "<?= base_url('admin/spbu/kecamatan') ?>",
@@ -196,24 +197,28 @@
             });
         }
     });
-  });
+
+});
 </script>
 
 <!-- Leaflet Map Script untuk Edit -->
+<!-- PERBAIKAN: pakai window 'load' supaya Leaflet (L) sudah selesai dimuat oleh layout -->
 <script>
+window.addEventListener('load', function() {
+
     var peta2 = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles © Esri' });
     var map = L.map('map', {
-        center: [<?= $spbu['lokasi'] ?>], 
-        zoom: 15, 
-        layers: [peta2] 
+        center: [<?= $spbu['lokasi'] ?>],
+        zoom: 15,
+        layers: [peta2]
     });
 
     var coordinatInput = document.querySelector("[name=koordinat]");
     var curLocation = [<?= $spbu['lokasi'] ?>];
-    
+
     map.attributionControl.setPrefix(false);
     var marker = new L.marker(curLocation, { draggable: 'true' }).addTo(map);
-    
+
     marker.on('dragend', function(e) {
         var position = marker.getLatLng();
         marker.setLatLng(position, { draggable: 'true' }).bindPopup(position).update();
@@ -226,4 +231,6 @@
         marker.setLatLng(e.latlng);
         coordinatInput.value = lat + "," + lng;
     });
+
+});
 </script>

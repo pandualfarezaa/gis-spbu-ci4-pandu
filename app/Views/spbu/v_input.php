@@ -57,7 +57,7 @@
                     <select name="id_jenis" class="form-control select2" style="width: 100%;">
     <option value="">--Pilih Jenis SPBU--</option>
     <?php foreach ($jenis as $key => $value) { ?>
-        <!-- 🟢 Sisi kiri memakai id_jenis, Sisi kanan/tulisan memakai jenis -->
+        <!-- Sisi kiri memakai id_jenis, Sisi kanan/tulisan memakai jenis -->
         <option value="<?= $value['id_jenis'] ?>"><?= $value['jenis'] ?></option>
     <?php } ?>
 </select>
@@ -81,7 +81,6 @@
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Provinsi</label>
-                            <!-- 🟢 Ditambahkan class select2bs4 agar terikat ke JavaScript -->
                             <select name="id_provinsi" id="id_provinsi" class="form-control select2" style="width: 100%;">
                                 <option value="">--Pilih Provinsi--</option>
                                 <?php foreach ($provinsi as $key => $value) { ?>
@@ -91,7 +90,7 @@
                             <p class="text-danger">
                                 <?= $validation->hasError('id_provinsi') ? $validation->getError('id_provinsi') : '' ?>
                             </p>
-                        </div> <!-- 🟢 Penutup div form-group yang tadi keliru -->
+                        </div>
                     </div>
 
                     <!-- Kolom 2: Kabupaten -->
@@ -162,9 +161,11 @@
     </div>
 </div>
 
-<!-- 🟢 Script Select2 yang sudah diperbaiki kurung dan syntax error-nya -->
+<!-- Script Select2 & AJAX dropdown berantai -->
+<!-- PERBAIKAN: pakai window 'load' supaya jQuery & select2 sudah selesai dimuat oleh layout -->
 <script>
-  $(document).ready(function() {
+window.addEventListener('load', function() {
+
     $('.select2').select2();
     $('.select2bs4').select2({
       theme: 'bootstrap4'
@@ -193,23 +194,26 @@
             url: "<?= base_url('admin/spbu/kecamatan') ?>",
             data: { id_kabupaten: id_kabupaten },
             success: function(response) {
-                // 🟢 Memisah hasil response dari controller berdasarkan pembatas
+                // Memisah hasil response dari controller berdasarkan pembatas
                 var hasil = response.split("||SPLIT_DISINI||");
-                
+
                 // Hasil belahan pertama (indeks 0) masuk ke Dropdown Kecamatan
                 $('#id_kecamatan').html(hasil[0]);
-                
+
                 // Hasil belahan kedua (indeks 1) masuk ke Dropdown Wilayah Administrasi
                 $('#id_wilayah').html(hasil[1]);
             }
         });
     });
 
-  });
-
+});
 </script>
 
+<!-- Leaflet Map Script untuk Input -->
+<!-- PERBAIKAN: pakai window 'load' supaya Leaflet (L) sudah selesai dimuat oleh layout -->
 <script>
+window.addEventListener('load', function() {
+
     var peta1 = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap'
     });
@@ -248,7 +252,7 @@
     var marker = new L.marker(curLocation, {
         draggable: 'true'
     });
-    
+
     marker.on('dragend', function(e) {
         var position = marker.getLatLng();
         marker.setLatLng(position, {
@@ -268,4 +272,6 @@
         coordinatInput.value = lat + "," + lng;
     });
     map.addLayer(marker);
+
+});
 </script>

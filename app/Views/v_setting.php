@@ -1,3 +1,7 @@
+<!-- 1. CDN LEAFLET CSS & JS (Wajib ada agar peta muncul) -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
 <?php if (!isset($judul)) { $judul = 'Pengaturan'; } ?>
 <div class="col-md-12">
     <div class="card card-outline card-primary">
@@ -60,41 +64,56 @@
 <div class="col-md-12">
     <div class="card card-outline card-info">
         <div class="card-body">
-            <div id="map" style="width: 100%; height: 500px;"></div>
+            <div id="map" style="width: 100%; height: 500px; z-index: 1;"></div>
         </div>
     </div>
 </div>
 
 <script>
-    // 🔹 OSM (Default)
+    // 🔹 Base Layers (Basemaps)
     var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap'
     });
 
-    // 🔹 Satellite (ESRI)
     var satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { 
         attribution: 'Tiles © Esri' 
     });
 
-    // 🔹 Street (Carto Light)
     var street = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { 
         attribution: '© Carto' 
     });
 
-    // 🔹 Night / Dark Mode
     var night = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { 
         attribution: '© Carto' 
     });
 
-    // Koordinat Titik Awal dari Database
-    var centerCoords = [<?= $spbu['coordinat_wilayah'] ?>];
+    // 🟢 SINKRONISASI AMAN UNTUK FORMAT KOORDINAT STRING
+    var dbCoords = "<?= $spbu['coordinat_wilayah'] ?>";
+    var centerCoords = [-7.26453, 109.01241]; // Default Jatisawit Bumiayu jika database kosong
+    var zoomInitial = <?= !empty($spbu['zoom_view']) ? $spbu['zoom_view'] : 12 ?>;
 
-    // 🔹 Init Map
+    if (dbCoords) {
+        var splitCoords = dbCoords.split(',');
+        if (splitCoords.length === 2) {
+            var latArr = parseFloat(splitCoords[0].trim());
+            var lngArr = parseFloat(splitCoords[1].trim());
+            if (!isNaN(latArr) && !isNaN(lngArr) && latArr !== 0 && lngArr !== 0) {
+                centerCoords = [latArr, lngArr];
+            }
+        }
+    }
+
+    // 🔹 Inisialisasi Peta
     var map = L.map('map', {
         center: centerCoords,
-        zoom: <?= $spbu['zoom_view'] ?>,
+        zoom: zoomInitial,
         layers: [osm]
     });
+
+    // Memaksa Leaflet menggambar ulang ukuran container peta agar render sempurna
+    setTimeout(function() {
+        map.invalidateSize();
+    }, 300);
 
     var baseMaps = {
         "OSM": osm,
@@ -102,7 +121,6 @@
         "Street": street,
         "Night": night
     };
-
     L.control.layers(baseMaps).addTo(map);
 
     // 🟢 Marker Utama (Bisa digeser/draggable)
@@ -126,7 +144,7 @@
         document.getElementById('coordinat_wilayah').value = lat + ", " + lng;
     });
 
-    // 🟢 Fitur 3: Saat Input DIKETIK MANUAL (Peta dan Marker otomatis loncat ke lokasi baru)
+    // 🟢 Fitur 3: Saat Input DIKETIK MANUAL
     document.getElementById('coordinat_wilayah').addEventListener('change', function() {
         var nilaiInput = this.value.split(',');
         if (nilaiInput.length === 2) {
@@ -135,13 +153,13 @@
             
             if (!isNaN(lat) && !isNaN(lng)) {
                 var lokasiBaru = [lat, lng];
-                marker.setLatLng(lokasiBaru); // Geser marker ke lokasi hasil ketikan
-                map.setView(lokasiBaru, map.getZoom()); // Fokuskan peta ke lokasi baru
+                marker.setLatLng(lokasiBaru);
+                map.setView(lokasiBaru, map.getZoom());
             }
         }
     });
 
-    // 🟢 Fitur 4: Saat Zoom Peta Berubah (Otomatis sinkron ke angka inputan Zoom)
+    // 🟢 Fitur 4: Saat Zoom Peta Berubah
     map.on('zoomend', function() {
         document.getElementById('zoom_view').value = map.getZoom();
     });

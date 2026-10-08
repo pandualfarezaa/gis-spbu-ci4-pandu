@@ -8,20 +8,20 @@
                 </a>
             </div>
         </div>
-        
+
         <div class="card-body">
             <div class="row">
-                <!-- 🗺️ SISI KIRI: Peta Lokasi SPBU -->
+                <!-- SISI KIRI: Peta Lokasi SPBU -->
                 <div class="col-sm-6">
                     <div id="map" style="width: 100%; height: 400px; border-radius: 8px;"></div>
                 </div>
-                
-                <!-- 📋 SISI KANAN: Foto & Informasi Detail -->
+
+                <!-- SISI KANAN: Foto & Informasi Detail -->
                 <div class="col-sm-6">
                     <div class="text-center mb-3">
                         <img src="<?= base_url('foto/' . $spbu['foto']) ?>" class="img-fluid img-thumbnail" style="max-height: 250px; width: 100%; object-fit: cover;" alt="Foto SPBU">
                     </div>
-                    
+
                     <table class="table table-bordered table-striped table-sm">
                         <tr>
                             <th width="180px">Nama SPBU</th>
@@ -58,9 +58,12 @@
     </div>
 </div>
 
-<!-- 🟢 SCRIPT LEAFLET DETAIL MAP -->
+<!-- SCRIPT LEAFLET DETAIL MAP -->
+<!-- PERBAIKAN: pakai window 'load' supaya Leaflet (L) sudah selesai dimuat oleh layout -->
 <script>
-    // 🟢 PERBAIKAN: Peta langsung berpusat pada lokasi SPBU ini dengan Zoom level 15
+window.addEventListener('load', function() {
+
+    // Peta berpusat pada lokasi SPBU ini dengan zoom level 15
     var map = L.map('map').setView([<?= $spbu['lokasi'] ?>], 15);
 
     // Base Map (OpenStreetMap)
@@ -68,8 +71,11 @@
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    // Buat Marker otomatis tepat di titik koordinat SPBU tersebut
+    // Marker otomatis tepat di titik koordinat SPBU
+    // (json_encode + esc supaya tanda kutip di nama/alamat tidak merusak script)
     L.marker([<?= $spbu['lokasi'] ?>]).addTo(map)
-        .bindPopup("<b><?= $spbu['nama_spbu'] ?></b><br><?= $spbu['alamat'] ?>")
+        .bindPopup(<?= json_encode('<b>' . esc($spbu['nama_spbu']) . '</b><br>' . esc($spbu['alamat'])) ?>)
         .openPopup();
+
+});
 </script>

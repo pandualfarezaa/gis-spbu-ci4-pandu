@@ -144,4 +144,15 @@ class Wilayah extends BaseController
 
         return redirect()->to(base_url('admin/wilayah'));
     }
+
+    // 🟢 FUNGSI HAPUS YANG SUDAH DIPERBAIKI LANGSUNG KE MODEL
+    public function delete($id_wilayah)
+    {
+        // Mengikuti pola penamaan Model kamu (InsertData, UpdateData) -> Kemungkinan besar DeleteData
+        $this->ModelWilayah->DeleteData($id_wilayah);
+
+        session()->setFlashdata('pesan', 'Data wilayah berhasil dihapus!');
+
+        return redirect()->to(base_url('admin/wilayah'));
+    }
 }

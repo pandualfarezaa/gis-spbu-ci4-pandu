@@ -1,32 +1,101 @@
 <?php
 
 namespace App\Controllers;
+
 use App\Models\ModelSetting;
 use App\Models\ModelWilayah;
+use App\Models\ModelJenis;
 
 class Home extends BaseController
 {
+    protected $ModelSetting;
+    protected $ModelWilayah;
+    protected $ModelJenis;
+
     public function __construct()
     {
         $this->ModelSetting = new ModelSetting();
         $this->ModelWilayah = new ModelWilayah();
+        $this->ModelJenis = new ModelJenis();
     }
 
- public function index(): string
-{
-    // 🟢 Ambil data setting secara tunggal (satu baris) menggunakan getRowArray()
-    // Catatan: Pastikan di dalam ModelSetting kamu ada fungsi bernama 'DataSetting()' 
-    // atau sesuaikan dengan fungsi yang mengambil data dari 'tbl_setting'
-    $db = \Config\Database::connect();
-    $setting = $db->table('tbl_setting')->where('id', 1)->get()->getRowArray();
+    public function index(): string
+    {
+        $setting = $this->ModelSetting->DataSetting();
+        $rawSpbu = $this->ModelSetting->DataSpbu();
+        $cleanSpbu = [];
 
-    $data = [
-        'judul' => 'Home',
-        'page'  => 'v_home',
-        'spbu'  => $this->ModelSetting->DataSpbu(), // Tetap ada untuk marker spbu nanti
-        'web'   => $setting, // 🟢 Dikirim sebagai $web, persis seperti di tutor!
-        'wilayah' => $this->ModelWilayah->AllData(),
-    ];
-    return view('v_template_front_end', $data);
-}
+        if (is_array($rawSpbu)) {
+            foreach ($rawSpbu as $s) {
+                $cleanSpbu[] = $s;
+            }
+        }
+
+        $data = [
+            'judul'   => 'Home',
+            'page'    => 'v_home',
+            'web'     => $setting, 
+            'wilayah' => $this->ModelWilayah->AllData(),
+            'jenis'   => $this->ModelJenis->AllData(), 
+            'spbu'    => $cleanSpbu, 
+        ];
+
+        return view('v_template_front_end', $data);
+    }
+
+    // 🟢 FITUR BARU: Filter Berdasarkan Wilayah (Brebes / Banyumas)
+    public function wilayah($id_wilayah): string
+    {
+        $setting = $this->ModelSetting->DataSetting();
+        $rawSpbu = $this->ModelSetting->DataSpbu();
+        $cleanSpbu = [];
+
+        if (is_array($rawSpbu)) {
+            foreach ($rawSpbu as $s) {
+                // Hanya masukkan SPBU yang cocok dengan ID Wilayah yang dipilih
+                if (isset($s['id_wilayah']) && $s['id_wilayah'] == $id_wilayah) {
+                    $cleanSpbu[] = $s;
+                }
+            }
+        }
+
+        $data = [
+            'judul'   => 'Filter Wilayah',
+            'page'    => 'v_home',
+            'web'     => $setting, 
+            'wilayah' => $this->ModelWilayah->AllData(),
+            'jenis'   => $this->ModelJenis->AllData(), 
+            'spbu'    => $cleanSpbu, 
+        ];
+
+        return view('v_template_front_end', $data);
+    }
+
+    // 🟢 FITUR BARU: Filter Berdasarkan Jenis (SPBU / Pertashop)
+    public function jenis($id_jenis): string
+    {
+        $setting = $this->ModelSetting->DataSetting();
+        $rawSpbu = $this->ModelSetting->DataSpbu();
+        $cleanSpbu = [];
+
+        if (is_array($rawSpbu)) {
+            foreach ($rawSpbu as $s) {
+                // Hanya masukkan SPBU yang cocok dengan ID Jenis yang dipilih
+                if (isset($s['id_jenis']) && $s['id_jenis'] == $id_jenis) {
+                    $cleanSpbu[] = $s;
+                }
+            }
+        }
+
+        $data = [
+            'judul'   => 'Filter Jenis SPBU',
+            'page'    => 'v_home',
+            'web'     => $setting, 
+            'wilayah' => $this->ModelWilayah->AllData(),
+            'jenis'   => $this->ModelJenis->AllData(), 
+            'spbu'    => $cleanSpbu, 
+        ];
+
+        return view('v_template_front_end', $data);
+    }
 }

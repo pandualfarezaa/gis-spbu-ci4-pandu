@@ -22,13 +22,27 @@ class Admin extends BaseController
         return view('v_template_back_end', $data);
     }
 
-    public function setting(): string
+     public function setting(): string
     {
+        $settingData = $this->ModelSetting->DataSpbu();
+
+        // 🟢 JIKA DATA BERBENTUK BANYAK BARIS, AMBIL BARIS PERTAMA (INDEKS 0)
+        if (isset($settingData[0])) {
+            $spbuData = $settingData[0];
+        } else {
+            $spbuData = $settingData;
+        }
+
         $data = [
             'judul' => 'Setting',
             'menu'  => 'setting',
-            'page' => 'v_setting',
-            'spbu' => $this->ModelSetting->DataSpbu(),
+            'page'  => 'v_setting',
+            // 🟢 BERIKAN NILAI CADANGAN KOSONG AGAR JIKA DATABASE KOSONG TIDAK EROR
+            'spbu'  => [
+                'nama_spbu'         => $spbuData['nama_spbu'] ?? '',
+                'coordinat_wilayah' => $spbuData['coordinat_wilayah'] ?? $spbuData['koordinat_wilayah'] ?? '', 
+                'zoom_view'         => $spbuData['zoom_view'] ?? '10',
+            ],
         ];
         return view('v_template_back_end', $data);
     }

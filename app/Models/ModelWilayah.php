@@ -29,12 +29,14 @@ class ModelWilayah extends Model
             ->where('id_wilayah', $data['id_wilayah'])
             ->update($data);
    }
-   public function DeleteData($data)
-{
-    // Cek apakah nama tabelnya benar 'wilayah'
-    // Cek apakah nama primary key-nya benar 'id_wilayah'
-    return $this->db->table('tbl_wilayah') // Ganti 'tbl_wilayah' dengan nama tabelmu
-                    ->where('id_wilayah', $data['id_wilayah'])
-                    ->delete();
-}
+
+   // 🟢 DIPERBAIKI: terima $id langsung (string/int), bukan array.
+   // Controller memanggil DeleteData($id_wilayah), bukan DeleteData(['id_wilayah' => ...]),
+   // jadi parameter di sini disamakan supaya tidak error "Cannot access offset of type string on string".
+   public function DeleteData($id_wilayah)
+   {
+        return $this->db->table('tbl_wilayah')
+                        ->where('id_wilayah', $id_wilayah)
+                        ->delete();
+   }
 }
