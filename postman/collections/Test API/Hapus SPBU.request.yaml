@@ -1,0 +1,5 @@
+$kind: http-request
+description: ""
+url: "{{base_url}}/api/spbu/27"
+method: DELETE
+order: 4426461732771855

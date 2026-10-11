@@ -104,4 +104,28 @@ $routes->get('admin/feedback/hapus/(:num)', 'AdminFeedback::hapus/$1');
 
 $routes->post('home/kirim_feedback', 'Home::kirim_feedback');
 
+// ===================== REST API (JSON) =====================
+// Tempel di app/Config/Routes.php, SETELAH rute yang sudah ada
+// (paling bawah, tapi masih di dalam file Routes.php)
+
+$routes->group('api', static function ($routes) {
+    // rute khusus harus ditulis SEBELUM resource, supaya "geojson" tidak dianggap sebagai {id}
+    $routes->get('spbu/geojson', 'Api\Spbu::geojson');
+
+    // GET /api/spbu, GET /api/spbu/{id}, POST /api/spbu, PUT /api/spbu/{id}, DELETE /api/spbu/{id}
+    $routes->resource('spbu', [
+        'controller' => 'Api\Spbu',
+        'only'       => ['index', 'show', 'create', 'update', 'delete'],
+    ]);
+
+    // data referensi (hanya GET)
+    $routes->get('jenis',         'Api\Referensi::jenis');
+    $routes->get('provinsi',      'Api\Referensi::provinsi');
+    $routes->get('kabupaten',     'Api\Referensi::kabupaten');
+    $routes->get('kecamatan',     'Api\Referensi::kecamatan');
+    $routes->get('wilayah',       'Api\Referensi::wilayah');
+    $routes->get('wilayah/(:num)', 'Api\Referensi::wilayahDetail/$1');
+});
+
+
 

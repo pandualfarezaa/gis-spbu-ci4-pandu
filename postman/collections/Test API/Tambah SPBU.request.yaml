@@ -1,0 +1,30 @@
+$kind: http-request
+description: ""
+url: "{{base_url}}/api/spbu"
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \  \"nama_spbu\": \"SPBU Tes API\",\r
+
+    \  \"id_jenis\": 1,\r
+
+    \  \"status\": \"Aktif\",\r
+
+    \  \"rest_area\": \"Ada\",\r
+
+    \  \"lokasi\": \"-7.2652, 109.0125\",\r
+
+    \  \"alamat\": \"Jl. Contoh No. 1\",\r
+
+    \  \"id_provinsi\": 33,\r
+
+    \  \"id_kabupaten\": 3301,\r
+
+    \  \"id_kecamatan\": 5,\r
+
+    \  \"id_wilayah\": 1\r
+
+    }"
+order: 925884905822273

@@ -1,0 +1,5 @@
+$kind: http-request
+description: ""
+url: "{{base_url}}/api/spbu"
+method: GET
+order: 1791451448301
