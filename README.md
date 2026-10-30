@@ -38,6 +38,7 @@ Pastikan perangkat sudah memiliki:
 - PHP dengan ekstensi `intl`, `mbstring`, `pgsql`, dan `curl`.
 - PostgreSQL aktif.
 - Composer.
+- Web server lokal, seperti FlyEnv, XAMPP, atau Laragon.
 
 ## Konfigurasi dan Menjalankan
 
@@ -45,7 +46,7 @@ Pastikan perangkat sudah memiliki:
 
    ```bash
    git clone https://github.com/pandualfarezaa/gis-spbu-ci4-pandu.git
-   cd spirula
+   cd gis-spbu-ci4-pandu
    ```
 
 2. Install dependency:
@@ -54,33 +55,33 @@ Pastikan perangkat sudah memiliki:
    composer install
    ```
 
-3. Salin konfigurasi environment dan sesuaikan database PostgreSQL:
+3. Salin `.env.example` menjadi `.env`, lalu sesuaikan password PostgreSQL:
+
+   macOS/Linux:
 
    ```bash
-   cp env .env
+   cp .env.example .env
    ```
 
-   Contoh konfigurasi:
+   Windows PowerShell:
 
-   ```ini
-   CI_ENVIRONMENT = development
-   database.default.hostname = 127.0.0.1
-   database.default.database = db_gis_spbu_ci4
-   database.default.username = postgres
-   database.default.password = password_postgresql
-   database.default.DBDriver = Postgre
-   database.default.port = 5432
+   ```powershell
+   Copy-Item .env.example .env
    ```
 
-4. Pastikan web server mengarah ke folder `public`.
+   Setelah menyalin file, buka `.env` dan isi `database.default.password` dengan password PostgreSQL milik perangkat tersebut. Jangan mengunggah `.env` ke GitHub karena dapat berisi password database.
 
-5. Jalankan server development:
+4. Buat database PostgreSQL dengan nama `db_gis_spbu_ci4`, kemudian import struktur dan data dari file backup database `.sql` yang disediakan bersama project.
+
+5. Pastikan web server mengarah ke folder `public`.
+
+6. Jalankan server development:
 
    ```bash
    php spark serve
    ```
 
-6. Buka halaman utama melalui alamat yang ditampilkan server. Halaman login tersedia di `/auth/login`, registrasi di `/auth/register`, dan dashboard di `/admin/dashboard`.
+7. Buka halaman utama melalui alamat yang ditampilkan server. Jika menggunakan `php spark serve`, sesuaikan `app.baseURL` di `.env` dengan alamat server lokal, misalnya `app.baseURL = 'http://localhost:8080/'`. Halaman login tersedia di `/auth/login`, registrasi di `/auth/register`, dan dashboard di `/admin/dashboard`.
 
 ## Endpoint API
 

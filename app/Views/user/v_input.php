@@ -20,7 +20,8 @@
                 </div>
                 <div class="form-group">
                     <label>Foto</label>
-                    <input type="file" name="foto_user" class="form-control" accept="image/*" required>
+                    <input type="file" name="foto_user" class="form-control" accept="image/*">
+                    <small class="form-text text-muted">Opsional. Foto boleh dikosongkan.</small>
                 </div>
             </div>
             
