@@ -302,3 +302,162 @@ h1, h2, h3, h4, h5, h6,
   border: 2px solid #fff;
 }
 .spbu-marker-pin i { transform: rotate(45deg); color: #fff; font-size: 15px; }
+
+/* ===== MODERN GIS SYSTEM LAYER ===== */
+:root {
+  --navy: #0e1b2b;
+  --navy-soft: #172a40;
+  --blue-bright: #1677c8;
+  --surface-deep: #eef2f6;
+  --shadow-soft: 0 14px 36px rgba(14, 27, 43, 0.08);
+  --shadow-card: 0 8px 24px rgba(14, 27, 43, 0.07);
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--surface-deep);
+  letter-spacing: -0.01em;
+}
+
+/* Backend: a dark navigation rail makes the data workspace feel deliberate. */
+.admin-shell .main-sidebar {
+  background: var(--navy) !important;
+  border-right: 0 !important;
+  box-shadow: 10px 0 30px rgba(14, 27, 43, 0.12) !important;
+}
+.admin-shell .brand-link {
+  min-height: 76px;
+  padding: 16px 18px;
+  border-bottom: 1px solid rgba(255,255,255,0.09) !important;
+}
+.admin-shell .brand-text,
+.admin-shell .user-panel .info a,
+.admin-shell .nav-sidebar .nav-link,
+.admin-shell .nav-sidebar .nav-header {
+  color: #eef4fb !important;
+}
+.admin-shell .brand-text {
+  font-size: 1.05rem;
+  letter-spacing: 0.03em;
+}
+.admin-shell .brand-image-wrap img {
+  border-color: rgba(255,255,255,0.2);
+}
+.admin-shell .user-panel {
+  border-bottom-color: rgba(255,255,255,0.09) !important;
+  padding-bottom: 18px !important;
+}
+.admin-shell .user-panel .info a { opacity: 0.82; font-size: 0.86rem; }
+.admin-shell .sidebar .form-inline { margin: 0 8px 16px; }
+.admin-shell .sidebar .form-control-sidebar,
+.admin-shell .sidebar .btn-sidebar {
+  background: var(--navy-soft);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #eef4fb;
+}
+.admin-shell .sidebar .form-control-sidebar::placeholder { color: #91a4ba; }
+.admin-shell .nav-sidebar .nav-link {
+  margin: 4px 10px;
+  padding: 11px 14px;
+  border-left: 0;
+  border-radius: 10px;
+  opacity: 0.72;
+}
+.admin-shell .nav-sidebar .nav-link:hover {
+  background: rgba(255,255,255,0.08) !important;
+  color: #fff !important;
+  padding-left: 14px;
+  opacity: 1;
+}
+.admin-shell .nav-sidebar .nav-link.active {
+  background: linear-gradient(100deg, var(--red), #bd1820) !important;
+  color: #fff !important;
+  box-shadow: 0 8px 18px rgba(227, 27, 35, 0.24);
+}
+.admin-shell .nav-sidebar .nav-link .nav-icon,
+.admin-shell .nav-sidebar .nav-link.active .nav-icon { color: currentColor; }
+
+.admin-shell .main-header.navbar-white {
+  min-height: 64px;
+  background: rgba(255,255,255,0.92) !important;
+  backdrop-filter: blur(14px);
+}
+.admin-shell .content-wrapper { background: var(--surface-deep) !important; }
+.admin-shell .content-header { padding: 28px 24px 12px; }
+.admin-shell .content-header h1 { font-size: 1.7rem; letter-spacing: -0.04em; }
+.admin-shell .content { padding: 0 24px 28px; }
+.admin-shell .main-footer { padding: 18px 24px; }
+
+/* Shared workspace surfaces. */
+.card {
+  border-radius: 16px !important;
+  box-shadow: var(--shadow-card) !important;
+  overflow: hidden;
+}
+.card-header {
+  padding: 18px 22px;
+  border-bottom: 1px solid #e8edf2;
+}
+.card-title { font-size: 1rem; font-weight: 800; letter-spacing: -0.02em; }
+.card-body { padding: 22px; }
+.card-tools .btn,
+.btn { border-radius: 8px; font-weight: 700; letter-spacing: 0.01em; }
+.btn-primary { background: var(--blue-bright) !important; border-color: var(--blue-bright) !important; }
+.btn-primary:hover { background: #0c5fa7 !important; border-color: #0c5fa7 !important; }
+.btn-success { background: #258a63 !important; border-color: #258a63 !important; }
+
+.table {
+  color: var(--ink);
+  border-color: #e8edf2 !important;
+}
+.table thead th {
+  background: #f6f8fa;
+  border-bottom: 1px solid #dfe6ed !important;
+  color: #637386;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.table td { vertical-align: middle; }
+.table tbody tr { transition: background 0.18s ease; }
+.table tbody tr:hover { background: #f8fbfd; }
+.form-control,
+.custom-select,
+.select2-container--default .select2-selection--single {
+  min-height: 42px;
+  border: 1px solid #dce4eb;
+  border-radius: 9px;
+  box-shadow: none;
+}
+.form-control:focus,
+.custom-select:focus {
+  border-color: var(--blue-bright);
+  box-shadow: 0 0 0 3px rgba(22,119,200,0.12);
+}
+label { color: #536579; font-size: 0.82rem; font-weight: 800; }
+
+/* Public map: reduce framework chrome and make the map a hero surface. */
+.site-public .content-wrapper { background: #edf2f5 !important; }
+.site-public .content { padding: 18px 0 30px; }
+.site-public .content > .row { margin: 0; }
+.site-public .card {
+  border-radius: 20px !important;
+  box-shadow: 0 18px 44px rgba(14, 27, 43, 0.1) !important;
+}
+.site-public #map {
+  min-height: min(72vh, 720px);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.site-public .main-footer { padding: 18px 5%; }
+
+@media (max-width: 767.98px) {
+  .admin-shell .content-header { padding: 22px 14px 8px; }
+  .admin-shell .content { padding: 0 14px 20px; }
+  .admin-shell .content-header h1 { font-size: 1.35rem; }
+  .card-body { padding: 16px; }
+  .site-public .content { padding: 10px 0 18px; }
+  .site-public #map { min-height: 68vh; border-radius: 12px; }
+}

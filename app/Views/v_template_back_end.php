@@ -25,7 +25,7 @@
   <!-- Tema custom (satu file, dipakai bersama frontend) -->
   <link rel="stylesheet" href="<?= base_url('assets/css/theme-spbu.css') ?>">
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini admin-shell">
 <div class="wrapper">
 
   <!-- Navbar -->

@@ -20,7 +20,7 @@ class ModelJenis extends Model
    public function DetailData($id_jenis)
    {
         return $this->db->table('tbl_jenis')
-                ->where('id_wilayah', $id_jenis)
+                ->where('id_jenis', $id_jenis)
                 ->get()->getRowArray();
    }
       public function UpdateData($data)

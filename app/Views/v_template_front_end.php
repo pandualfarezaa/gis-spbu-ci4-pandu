@@ -17,7 +17,7 @@
   <!-- Tema custom (satu file, dipakai bersama backend) -->
   <link rel="stylesheet" href="<?= base_url('assets/css/theme-spbu.css') ?>">
 </head>
-<body class="hold-transition layout-top-nav">
+<body class="hold-transition layout-top-nav site-public">
 <div class="wrapper">
 
   <!-- Navbar -->

@@ -98,4 +98,31 @@ class Home extends BaseController
 
         return view('v_template_front_end', $data);
     }
+
+    public function detail($id_spbu): string
+    {
+        $spbu = $this->ModelSetting->DataSpbu();
+        $detail = null;
+
+        foreach ($spbu as $row) {
+            if ((int) ($row['id_spbu'] ?? 0) === (int) $id_spbu) {
+                $detail = $row;
+                break;
+            }
+        }
+
+        if ($detail === null) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('SPBU tidak ditemukan.');
+        }
+
+        return view('v_template_front_end', [
+            'judul'   => 'Detail SPBU',
+            'page'    => 'home/v_detail',
+            'web'     => $this->ModelSetting->DataSetting(),
+            'wilayah' => $this->ModelWilayah->AllData(),
+            'jenis'   => $this->ModelJenis->AllData(),
+            'spbu'    => $detail,
+        ]);
+    }
+
 }

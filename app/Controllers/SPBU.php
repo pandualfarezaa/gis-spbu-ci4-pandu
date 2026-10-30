@@ -10,6 +10,10 @@ use App\Models\ModelSPBU;
 
 class SPBU extends BaseController
 {
+    protected $ModelSetting;
+    protected $ModelWilayah;
+    protected $ModelSPBU;
+
     public function __construct()
     {
         $this->ModelSetting = new ModelSetting();
