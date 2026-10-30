@@ -31,7 +31,7 @@ class JenisSPBU extends BaseController
         'id_jenis' => $id_jenis,
         'marker'   => $name_file,
     ];
-    $marker->move('marker', $name_file);
+    $marker->move(FCPATH . 'marker', $name_file);
     $this->ModelJenis->UpdateData($data);
 
     // Menambahkan notifikasi sukses dan return redirect sesuai instruksi video

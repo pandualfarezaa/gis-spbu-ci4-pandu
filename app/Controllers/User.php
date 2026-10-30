@@ -37,7 +37,12 @@ class User extends BaseController
     public function InsertData()
     {
         $foto = $this->request->getFile('foto_user');
-        $nama_file = $foto->getRandomName();
+        $nama_file = '';
+
+        if ($foto && $foto->isValid() && ! $foto->hasMoved()) {
+            $nama_file = $foto->getRandomName();
+            $foto->move(FCPATH . 'foto', $nama_file);
+        }
 
         $data = [
             'nama_user' => $this->request->getPost('nama_user'),
@@ -46,7 +51,6 @@ class User extends BaseController
             'foto_user' => $nama_file,
         ];
 
-        $foto->move('foto', $nama_file);
         $this->ModelUser->InsertData($data);
 
         session()->setFlashdata('insert', 'Data User Berhasil Ditambahkan !!!');
@@ -74,8 +78,8 @@ class User extends BaseController
     {
         $foto = $this->request->getFile('foto_user');
 
-        // Jika user TIDAK mengganti foto baru (kosong)
-        if ($foto->getError() == 4) {
+        // Jika user tidak memilih foto baru, pertahankan foto lama.
+        if (! $foto || ! $foto->isValid() || $foto->getError() === UPLOAD_ERR_NO_FILE) {
             $data = [
                 'id_user'   => $id_user,
                 'nama_user' => $this->request->getPost('nama_user'),
@@ -88,8 +92,8 @@ class User extends BaseController
             $user_lama = $this->ModelUser->DetailData($id_user);
             
             if ($user_lama && !empty($user_lama['foto_user'])) {
-                if (file_exists('foto/' . $user_lama['foto_user'])) {
-                    unlink('foto/' . $user_lama['foto_user']);
+                if (file_exists(FCPATH . 'foto/' . $user_lama['foto_user'])) {
+                    unlink(FCPATH . 'foto/' . $user_lama['foto_user']);
                 }
             }
 
@@ -103,7 +107,7 @@ class User extends BaseController
                 'foto_user' => $nama_file,
             ];
 
-            $foto->move('foto', $nama_file);
+            $foto->move(FCPATH . 'foto', $nama_file);
             $this->ModelUser->UpdateData($data); // Memanggil UpdateData dari model
         }
 
@@ -120,8 +124,8 @@ class User extends BaseController
         
         // Hapus file gambar dari folder lokal sebelum record database dihapus
         if ($user && !empty($user['foto_user'])) {
-            if (file_exists('foto/' . $user['foto_user'])) {
-                unlink('foto/' . $user['foto_user']);
+            if (file_exists(FCPATH . 'foto/' . $user['foto_user'])) {
+                unlink(FCPATH . 'foto/' . $user['foto_user']);
             }
         }
 
