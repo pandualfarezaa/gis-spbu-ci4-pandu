@@ -5,18 +5,22 @@ namespace App\Controllers;
 use App\Models\ModelSetting;
 use App\Models\ModelWilayah;
 use App\Models\ModelJenis;
+use App\Models\ModelSPBU;
+use CodeIgniter\Exceptions\PageNotFoundException;
 
 class Home extends BaseController
 {
     protected $ModelSetting;
     protected $ModelWilayah;
     protected $ModelJenis;
+    protected $ModelSPBU;
 
     public function __construct()
     {
         $this->ModelSetting = new ModelSetting();
         $this->ModelWilayah = new ModelWilayah();
         $this->ModelJenis = new ModelJenis();
+        $this->ModelSPBU = new ModelSPBU();
     }
 
     public function index(): string
@@ -97,5 +101,24 @@ class Home extends BaseController
         ];
 
         return view('v_template_front_end', $data);
+    }
+
+    public function detail($id_spbu): string
+    {
+        $spbu = $this->ModelSPBU->DetailData($id_spbu);
+
+        if (! $spbu) {
+            throw PageNotFoundException::forPageNotFound('Data SPBU tidak ditemukan.');
+        }
+
+        return view('v_template_front_end', [
+            'judul'   => 'Detail SPBU: ' . $spbu['nama_spbu'],
+            'page'    => 'spbu/v_detail',
+            'public'  => true,
+            'web'     => $this->ModelSetting->DataSetting() ?? [],
+            'wilayah' => $this->ModelWilayah->AllData(),
+            'jenis'   => $this->ModelJenis->AllData(),
+            'spbu'    => $spbu,
+        ]);
     }
 }

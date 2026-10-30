@@ -5,7 +5,7 @@
         </div>
         <div class="card-body">
             
-            <?php if (session()->getFlashdata('validation')): ?>
+            <?php if ($validation->getErrors()): ?>
                 <div class="alert alert-danger alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                     <h5><i class="icon fas fa-ban"></i> Gagal Menyimpan!</h5>
@@ -146,7 +146,8 @@
 
                 <div class="form-group">
                     <label>Foto SPBU</label>
-                    <input type="file" accept=".jpg" name="foto" value="<?= old('foto') ?>" class="form-control">
+                    <input type="file" accept=".jpg,.jpeg,.png" name="foto" class="form-control">
+                    <small class="form-text text-muted">Opsional. Jika dikosongkan, sistem memakai foto default.</small>
                     <p class="text-danger">
                         <?= $validation->hasError('foto') ? $validation->getError('foto') : '' ?>
                     </p>

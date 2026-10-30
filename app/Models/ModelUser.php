@@ -48,4 +48,12 @@ class ModelUser extends Model
             'password' => sha1($password), // Menyesuaikan dengan SHA-1 di databasemu
         ])->get()->getRowArray();
 }
+
+    public function findByEmail($email)
+    {
+        return $this->db->table('tbl_user')
+            ->where('email', $email)
+            ->get()
+            ->getRowArray();
+    }
 }

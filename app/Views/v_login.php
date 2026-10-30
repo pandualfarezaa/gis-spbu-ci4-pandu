@@ -285,6 +285,9 @@
   </div>
 
   <!-- 🔵 Tombol kembali ke halaman utama (front-end) -->
+  <a href="<?= base_url('auth/register') ?>" class="back-to-home" style="margin-top: 14px;">
+    <i class="fas fa-user-plus"></i> Belum punya akun? Daftar
+  </a>
   <a href="<?= base_url('home') ?>" class="back-to-home">
     <i class="fas fa-arrow-left"></i> Kembali ke Beranda
   </a>

@@ -1,61 +1,149 @@
-# CodeIgniter 4 Framework
+# WebGIS SPBU
 
-## What is CodeIgniter?
+WebGIS SPBU adalah website interaktif untuk menampilkan dan mengelola data lokasi SPBU di wilayah Brebes dan Banyumas. Aplikasi ini menyediakan peta digital, informasi detail SPBU, pengelolaan wilayah, pengelolaan jenis marker, serta dashboard admin.
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+## Latar Belakang
 
-This repository holds the distributable version of the framework.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+Data lokasi SPBU perlu disajikan dalam bentuk yang mudah dicari dan dipahami. WebGIS ini membantu pengguna melihat sebaran SPBU pada peta, memfilter berdasarkan wilayah atau jenis SPBU, dan melihat informasi detail setiap lokasi.
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+## Fitur
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+- Halaman publik WebGIS dengan peta Leaflet.
+- Filter SPBU berdasarkan wilayah dan jenis SPBU.
+- Detail lokasi SPBU beserta foto, alamat, status, dan koordinat.
+- Login pengguna dan registrasi akun baru.
+- Dashboard admin.
+- CRUD data SPBU.
+- CRUD data wilayah.
+- CRUD data pengguna.
+- Pengaturan titik pusat dan zoom peta.
+- Validasi form di sisi server dan validasi dasar HTML di sisi klien.
+- REST API untuk data SPBU dan data referensi.
+- Tampilan responsif berbasis Bootstrap/AdminLTE.
+- Integrasi dashboard Google Data Studio/Looker Studio.
 
-## Important Change with index.php
+## Teknologi
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+- PHP 8.2 atau lebih baru.
+- CodeIgniter 4.
+- PostgreSQL.
+- HTML, CSS, JavaScript.
+- Leaflet.js.
+- Bootstrap/AdminLTE.
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+## Persiapan
 
-**Please** read the user guide for a better explanation of how CI4 works!
+Pastikan perangkat sudah memiliki:
 
-## Repository Management
+- PHP dengan ekstensi `intl`, `mbstring`, `pgsql`, dan `curl`.
+- PostgreSQL aktif.
+- Composer.
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+## Konfigurasi dan Menjalankan
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+1. Clone repository:
 
-## Contributing
+   ```bash
+   git clone https://github.com/pandualfarezaa/gis-spbu-ci4-pandu.git
+   cd spirula
+   ```
 
-We welcome contributions from the community.
+2. Install dependency:
 
-Please read the [*Contributing to CodeIgniter*](https://github.com/codeigniter4/CodeIgniter4/blob/develop/CONTRIBUTING.md) section in the development repository.
+   ```bash
+   composer install
+   ```
 
-## Server Requirements
+3. Salin konfigurasi environment dan sesuaikan database PostgreSQL:
 
-PHP version 8.2 or higher is required, with the following extensions installed:
+   ```bash
+   cp env .env
+   ```
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+   Contoh konfigurasi:
 
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - The end of life date for PHP 8.1 was December 31, 2025.
-> - If you are still using below PHP 8.2, you should upgrade immediately.
-> - The end of life date for PHP 8.2 will be December 31, 2026.
+   ```ini
+   CI_ENVIRONMENT = development
+   database.default.hostname = 127.0.0.1
+   database.default.database = db_gis_spbu_ci4
+   database.default.username = postgres
+   database.default.password = password_postgresql
+   database.default.DBDriver = Postgre
+   database.default.port = 5432
+   ```
 
-Additionally, make sure that the following extensions are enabled in your PHP:
+4. Pastikan web server mengarah ke folder `public`.
 
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+5. Jalankan server development:
+
+   ```bash
+   php spark serve
+   ```
+
+6. Buka halaman utama melalui alamat yang ditampilkan server. Halaman login tersedia di `/auth/login`, registrasi di `/auth/register`, dan dashboard di `/admin/dashboard`.
+
+## Endpoint API
+
+- `GET /api/spbu`
+- `GET /api/spbu/{id}`
+- `GET /api/spbu/geojson`
+- `POST /api/spbu`
+- `PUT /api/spbu/{id}`
+- `DELETE /api/spbu/{id}`
+- `GET /api/jenis`
+- `GET /api/provinsi`
+- `GET /api/kabupaten`
+- `GET /api/kecamatan`
+- `GET /api/wilayah`
+- `GET /api/wilayah/{id}`
+
+## Dokumentasi dan Screenshot
+
+### Halaman Utama WebGIS
+
+![Halaman utama WebGIS dengan filter jenis SPBU](dokumen/screenshots/01-webgis-filter-jenis.png)
+
+### Login
+
+![Halaman login](dokumen/screenshots/02-login.png)
+
+### Registrasi
+
+![Halaman registrasi](dokumen/screenshots/03-registrasi.png)
+
+### Dashboard Admin
+
+![Dashboard admin](dokumen/screenshots/04-dashboard.png)
+
+### Data SPBU
+
+![Halaman data SPBU](dokumen/screenshots/05-data-spbu.png)
+
+### Data Wilayah
+
+![Halaman data wilayah](dokumen/screenshots/06-wilayah.png)
+
+### Jenis SPBU
+
+![Halaman jenis SPBU](dokumen/screenshots/07-jenis-spbu.png)
+
+Screenshot yang disertakan meliputi:
+
+- Halaman utama peta WebGIS.
+- Halaman login dan registrasi.
+- Dashboard admin.
+- Halaman daftar dan form SPBU.
+- Halaman detail SPBU.
+- Halaman pengelolaan wilayah.
+- Contoh respons REST API.
+
+Dokumen spesifikasi kebutuhan sistem: https://docs.google.com/document/d/1KFh9qpu_TMY9iqrI_-fXEdwgCXsuQFNE652wyKPLEI4/edit?usp=sharing
+
+## Struktur Aplikasi
+
+- `app/Controllers` berisi controller aplikasi dan API.
+- `app/Models` berisi akses data database.
+- `app/Views` berisi tampilan aplikasi.
+- `app/Config/Routes.php` berisi daftar route.
+- `public` berisi entry point dan asset publik.
+- `writable` berisi cache, log, dan session.

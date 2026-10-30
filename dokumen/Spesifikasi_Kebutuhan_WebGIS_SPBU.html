@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Spesifikasi Kebutuhan Sistem WebGIS SPBU</title>
+<style>
+  @page { size: A4; margin: 2.2cm; }
+  body { font-family: Arial, sans-serif; color: #1f2937; font-size: 11pt; line-height: 1.5; }
+  h1 { color: #0054a6; text-align: center; font-size: 24pt; margin-top: 4cm; }
+  h2 { color: #0054a6; border-bottom: 2px solid #0054a6; padding-bottom: 4px; margin-top: 28px; }
+  h3 { color: #a30f17; margin-top: 18px; }
+  .subtitle { text-align: center; color: #6b7280; font-size: 14pt; }
+  .cover { height: 21cm; text-align: center; }
+  .meta { margin: 2cm auto; width: 75%; border-collapse: collapse; }
+  .meta td { border: 1px solid #d1d5db; padding: 8px; }
+  .meta td:first-child { background: #eef5fb; font-weight: bold; width: 35%; }
+  table { width: 100%; border-collapse: collapse; margin: 10px 0 18px; }
+  th { background: #0054a6; color: white; text-align: left; }
+  th, td { border: 1px solid #cbd5e1; padding: 7px; vertical-align: top; }
+  tr:nth-child(even) td { background: #f8fafc; }
+  code { font-family: Consolas, monospace; background: #f1f5f9; padding: 1px 4px; }
+  .note { background: #fff7ed; border-left: 4px solid #f97316; padding: 10px 12px; }
+  .placeholder { border: 1px dashed #94a3b8; color: #64748b; padding: 24px; text-align: center; margin: 10px 0 18px; }
+  .page-break { page-break-before: always; }
+  li { margin-bottom: 5px; }
+</style>
+</head>
+<body>
+
+<section class="cover">
+  <h1>SPESIFIKASI KEBUTUHAN SISTEM</h1>
+  <p class="subtitle">WebGIS SPBU Brebes dan Banyumas</p>
+  <table class="meta">
+    <tr><td>Nama Proyek</td><td>WebGIS SPBU</td></tr>
+    <tr><td>Mata Kuliah</td><td>Pemrograman Website</td></tr>
+    <tr><td>Program Studi</td><td>Informatika</td></tr>
+    <tr><td>Repository</td><td>https://github.com/pandualfarezaa/gis-spbu-ci4-pandu</td></tr>
+    <tr><td>Anggota Tim</td><td>[Isi nama anggota tim, maksimal 3 orang]</td></tr>
+    <tr><td>Dosen</td><td>Fathulloh, ST, M.Kom.</td></tr>
+    <tr><td>Tanggal</td><td>30 Oktober 2026</td></tr>
+  </table>
+  <p><b>Dokumen Spesifikasi Kebutuhan Sistem</b></p>
+</section>
+
+<h2>1. Pendahuluan</h2>
+<h3>1.1 Latar Belakang</h3>
+<p>Data lokasi Stasiun Pengisian Bahan Bakar Umum (SPBU) perlu disajikan secara informatif agar mudah dicari, dipantau, dan dikelola. Informasi dalam bentuk tabel saja kurang membantu pengguna memahami persebaran lokasi. Oleh karena itu, dikembangkan WebGIS SPBU yang menampilkan lokasi SPBU pada peta interaktif serta menyediakan pengelolaan data melalui halaman admin.</p>
+
+<h3>1.2 Tujuan</h3>
+<ul>
+  <li>Menyediakan peta interaktif persebaran SPBU di wilayah Brebes dan Banyumas.</li>
+  <li>Memudahkan pengguna melihat detail, alamat, foto, status, dan koordinat SPBU.</li>
+  <li>Menyediakan halaman admin untuk mengelola data SPBU, wilayah, jenis SPBU, dan pengguna.</li>
+  <li>Menyediakan REST API sebagai pengembangan dan integrasi dengan aplikasi lain.</li>
+</ul>
+
+<h3>1.3 Ruang Lingkup</h3>
+<p>Sistem mencakup halaman publik WebGIS, autentikasi pengguna, registrasi akun, dashboard admin, pengelolaan data SPBU, pengelolaan wilayah, pengelolaan pengguna, pengaturan pusat peta, serta REST API data SPBU dan referensi.</p>
+
+<h2>2. Gambaran Umum Sistem</h2>
+<h3>2.1 Aktor Sistem</h3>
+<table>
+  <tr><th>Aktor</th><th>Deskripsi</th><th>Hak Akses</th></tr>
+  <tr><td>Pengunjung</td><td>Pengguna umum yang mengakses halaman WebGIS.</td><td>Melihat peta, memfilter wilayah/jenis, dan melihat detail SPBU.</td></tr>
+  <tr><td>Pengguna Terdaftar/Admin</td><td>Pengguna yang sudah login ke sistem.</td><td>Mengakses dashboard dan fitur administrasi.</td></tr>
+  <tr><td>Pengelola Sistem</td><td>Pihak yang bertanggung jawab terhadap data dan konfigurasi sistem.</td><td>Mengelola seluruh data master dan pengaturan peta.</td></tr>
+</table>
+
+<h3>2.2 Arsitektur Teknologi</h3>
+<ul>
+  <li><b>Frontend:</b> HTML, CSS, JavaScript, Bootstrap/AdminLTE, dan Leaflet.js.</li>
+  <li><b>Backend:</b> PHP dengan framework CodeIgniter 4.</li>
+  <li><b>Database:</b> PostgreSQL.</li>
+  <li><b>API:</b> REST API berbasis JSON untuk data SPBU dan data referensi.</li>
+  <li><b>Web server:</b> PHP development server atau web server yang diarahkan ke folder <code>public</code>.</li>
+</ul>
+
+<h2>3. Kebutuhan Fungsional</h2>
+<table>
+  <tr><th>ID</th><th>Kebutuhan</th><th>Aktor</th><th>Keterangan</th></tr>
+  <tr><td>FR-01</td><td>Melihat peta WebGIS</td><td>Pengunjung</td><td>Sistem menampilkan peta dengan marker lokasi SPBU dan batas wilayah.</td></tr>
+  <tr><td>FR-02</td><td>Filter berdasarkan wilayah</td><td>Pengunjung</td><td>Pengguna dapat menampilkan SPBU berdasarkan wilayah yang dipilih.</td></tr>
+  <tr><td>FR-03</td><td>Filter berdasarkan jenis</td><td>Pengunjung</td><td>Pengguna dapat memfilter SPBU berdasarkan jenis SPBU.</td></tr>
+  <tr><td>FR-04</td><td>Melihat detail SPBU</td><td>Pengunjung</td><td>Sistem menampilkan nama, foto, alamat, status, fasilitas, dan koordinat.</td></tr>
+  <tr><td>FR-05</td><td>Registrasi akun</td><td>Pengunjung</td><td>Pengguna mengisi nama, email, dan password untuk membuat akun.</td></tr>
+  <tr><td>FR-06</td><td>Login dan logout</td><td>Pengguna terdaftar</td><td>Sistem memvalidasi akun dan mengatur session autentikasi.</td></tr>
+  <tr><td>FR-07</td><td>Dashboard admin</td><td>Admin</td><td>Admin mengakses dashboard setelah login.</td></tr>
+  <tr><td>FR-08</td><td>CRUD data SPBU</td><td>Admin</td><td>Admin dapat menambah, melihat, mengubah, dan menghapus data SPBU.</td></tr>
+  <tr><td>FR-09</td><td>CRUD data wilayah</td><td>Admin</td><td>Admin dapat mengelola nama, GeoJSON, dan warna wilayah.</td></tr>
+  <tr><td>FR-10</td><td>CRUD data pengguna</td><td>Admin</td><td>Admin dapat mengelola data pengguna sistem.</td></tr>
+  <tr><td>FR-11</td><td>Pengelolaan jenis marker</td><td>Admin</td><td>Admin dapat mengganti marker berdasarkan jenis SPBU.</td></tr>
+  <tr><td>FR-12</td><td>Pengaturan peta</td><td>Admin</td><td>Admin dapat mengubah koordinat pusat dan zoom peta.</td></tr>
+  <tr><td>FR-13</td><td>REST API</td><td>Aplikasi eksternal</td><td>API menyediakan data SPBU, GeoJSON, dan data referensi dalam format JSON.</td></tr>
+</table>
+
+<h2>4. Kebutuhan Nonfungsional</h2>
+<table>
+  <tr><th>ID</th><th>Kebutuhan</th><th>Implementasi</th></tr>
+  <tr><td>NFR-01</td><td>Responsif</td><td>Layout menggunakan Bootstrap/AdminLTE dan viewport mobile.</td></tr>
+  <tr><td>NFR-02</td><td>Keamanan akses</td><td>Halaman admin menggunakan session dan filter autentikasi.</td></tr>
+  <tr><td>NFR-03</td><td>Validasi</td><td>Validasi server-side CodeIgniter dan validasi dasar HTML.</td></tr>
+  <tr><td>NFR-04</td><td>Kompatibilitas</td><td>Berjalan pada PHP 8.2+, PostgreSQL, dan browser modern.</td></tr>
+  <tr><td>NFR-05</td><td>Kemudahan penggunaan</td><td>Menu publik, dashboard, tabel, form, dan peta dibuat konsisten.</td></tr>
+  <tr><td>NFR-06</td><td>Dokumentasi</td><td>Repository dan README menjelaskan instalasi, fitur, serta endpoint API.</td></tr>
+</table>
+
+<h2>5. Use Case Utama</h2>
+<ol>
+  <li>Pengunjung membuka halaman utama dan melihat peta SPBU.</li>
+  <li>Pengunjung memilih wilayah atau jenis SPBU untuk memfilter marker.</li>
+  <li>Pengunjung membuka popup marker dan memilih detail SPBU.</li>
+  <li>Pengunjung melakukan registrasi akun melalui halaman registrasi.</li>
+  <li>Pengguna melakukan login untuk masuk ke dashboard.</li>
+  <li>Admin menambah, mengubah, atau menghapus data SPBU.</li>
+  <li>Admin mengelola wilayah dan GeoJSON yang ditampilkan pada peta.</li>
+  <li>Aplikasi eksternal mengambil data melalui endpoint REST API.</li>
+</ol>
+
+<h2>6. Data dan Database</h2>
+<table>
+  <tr><th>Tabel</th><th>Fungsi</th><th>Contoh Data</th></tr>
+  <tr><td><code>tbl_spbu</code></td><td>Menyimpan data lokasi SPBU.</td><td>Nama, jenis, alamat, foto, status, lokasi, wilayah.</td></tr>
+  <tr><td><code>tbl_wilayah</code></td><td>Menyimpan batas wilayah peta.</td><td>Nama wilayah, GeoJSON, warna.</td></tr>
+  <tr><td><code>tbl_jenis</code></td><td>Menyimpan jenis SPBU dan marker.</td><td>Jenis, file marker.</td></tr>
+  <tr><td><code>tbl_user</code></td><td>Menyimpan akun pengguna.</td><td>Nama, email, password, foto pengguna.</td></tr>
+  <tr><td><code>tbl_setting</code></td><td>Menyimpan konfigurasi pusat peta.</td><td>Nama aplikasi, koordinat, zoom.</td></tr>
+  <tr><td><code>tbl_provinsi</code>, <code>tbl_kabupaten</code>, <code>tbl_kecamatan</code></td><td>Menyimpan data referensi wilayah administratif.</td><td>Nama dan relasi wilayah administratif.</td></tr>
+</table>
+
+<h2>7. REST API</h2>
+<table>
+  <tr><th>Method</th><th>Endpoint</th><th>Fungsi</th></tr>
+  <tr><td>GET</td><td><code>/api/spbu</code></td><td>Menampilkan daftar SPBU dan filter.</td></tr>
+  <tr><td>GET</td><td><code>/api/spbu/{id}</code></td><td>Menampilkan detail satu SPBU.</td></tr>
+  <tr><td>GET</td><td><code>/api/spbu/geojson</code></td><td>Menampilkan data SPBU dalam format GeoJSON.</td></tr>
+  <tr><td>POST</td><td><code>/api/spbu</code></td><td>Menambahkan data SPBU.</td></tr>
+  <tr><td>PUT</td><td><code>/api/spbu/{id}</code></td><td>Mengubah data SPBU.</td></tr>
+  <tr><td>DELETE</td><td><code>/api/spbu/{id}</code></td><td>Menghapus data SPBU.</td></tr>
+  <tr><td>GET</td><td><code>/api/jenis</code>, <code>/api/provinsi</code>, <code>/api/kabupaten</code>, <code>/api/kecamatan</code>, <code>/api/wilayah</code></td><td>Menampilkan data referensi.</td></tr>
+</table>
+
+<h2>8. Antarmuka Aplikasi</h2>
+<ul>
+  <li>Halaman utama WebGIS dengan peta, basemap, marker, popup, dan filter.</li>
+  <li>Halaman login.</li>
+  <li>Halaman registrasi.</li>
+  <li>Dashboard admin.</li>
+  <li>Halaman daftar, input, edit, dan detail SPBU.</li>
+  <li>Halaman pengelolaan wilayah.</li>
+  <li>Halaman pengelolaan pengguna.</li>
+  <li>Halaman pengelolaan jenis marker SPBU.</li>
+  <li>Halaman pengaturan pusat dan zoom peta.</li>
+</ul>
+
+<h2>9. Validasi dan Keamanan</h2>
+<ul>
+  <li>Form penting menggunakan aturan wajib isi, format email, panjang password, dan format file.</li>
+  <li>Halaman admin dilindungi oleh filter autentikasi session.</li>
+  <li>Route menggunakan daftar eksplisit dan auto-route dinonaktifkan.</li>
+  <li>Data koordinat divalidasi sebelum digunakan pada peta/API.</li>
+  <li>Konfigurasi password database tidak boleh dipublikasikan di repository.</li>
+</ul>
+<div class="note">Catatan keamanan: sebelum repository dibuat publik, gunakan password database yang aman dan jangan commit file `.env`.</div>
+
+<h2>10. Instalasi dan Menjalankan Sistem</h2>
+<ol>
+  <li>Clone repository dari GitHub.</li>
+  <li>Jalankan <code>composer install</code>.</li>
+  <li>Siapkan PostgreSQL dan database <code>db_gis_spbu_ci4</code>.</li>
+  <li>Salin file environment menjadi <code>.env</code> dan isi konfigurasi PostgreSQL.</li>
+  <li>Pastikan ekstensi PHP <code>intl</code>, <code>mbstring</code>, dan <code>pgsql</code> aktif.</li>
+  <li>Arahkan web server ke folder <code>public</code>.</li>
+  <li>Atau jalankan <code>php spark serve</code>.</li>
+  <li>Buka halaman utama, kemudian uji login, registrasi, CRUD, peta, dan API.</li>
+</ol>
+
+<h2>11. Rencana Pengujian</h2>
+<table>
+  <tr><th>No.</th><th>Skenario</th><th>Hasil yang Diharapkan</th><th>Status</th></tr>
+  <tr><td>1</td><td>Membuka halaman utama</td><td>Peta dan marker SPBU tampil.</td><td>[Isi]</td></tr>
+  <tr><td>2</td><td>Memfilter wilayah</td><td>Marker dan wilayah berubah sesuai filter.</td><td>[Isi]</td></tr>
+  <tr><td>3</td><td>Registrasi akun valid</td><td>Akun tersimpan dan pengguna diarahkan ke login.</td><td>[Isi]</td></tr>
+  <tr><td>4</td><td>Login dengan akun valid</td><td>Pengguna masuk ke dashboard.</td><td>[Isi]</td></tr>
+  <tr><td>5</td><td>Akses admin tanpa login</td><td>Pengguna diarahkan ke halaman login.</td><td>[Isi]</td></tr>
+  <tr><td>6</td><td>Tambah/edit/hapus SPBU</td><td>Data berubah di database dan daftar.</td><td>[Isi]</td></tr>
+  <tr><td>7</td><td>Mengakses endpoint API</td><td>Respons JSON sesuai endpoint.</td><td>[Isi]</td></tr>
+  <tr><td>8</td><td>Membuka dari perangkat mobile</td><td>Layout tetap terbaca dan dapat digunakan.</td><td>[Isi]</td></tr>
+</table>
+
+<h2>12. Screenshot Aplikasi</h2>
+<p>Tambahkan screenshot aktual setelah aplikasi dijalankan. Bagian berikut dapat digunakan sebagai urutan lampiran:</p>
+<div class="placeholder">Screenshot 1 — Halaman utama WebGIS dan peta</div>
+<div class="placeholder">Screenshot 2 — Halaman login dan registrasi</div>
+<div class="placeholder">Screenshot 3 — Dashboard admin</div>
+<div class="placeholder">Screenshot 4 — Daftar/form/detail SPBU</div>
+<div class="placeholder">Screenshot 5 — Pengelolaan wilayah dan jenis marker</div>
+<div class="placeholder">Screenshot 6 — Contoh respons REST API/Postman</div>
+
+<h2>13. Kolaborasi dan Pengumpulan</h2>
+<ul>
+  <li>Repository GitHub: https://github.com/pandualfarezaa/gis-spbu-ci4-pandu</li>
+  <li>Nama anggota tim: [Isi maksimal 3 nama].</li>
+  <li>Pembagian tugas: [Isi pembagian frontend, backend, database, dokumentasi, dan pengujian].</li>
+  <li>URL Google Docs: [Isi link dokumen setelah diunggah atau dibagikan].</li>
+  <li>Pastikan repository berisi kode lengkap, README, dan dokumentasi pendukung.</li>
+</ul>
+
+<h2>14. Kesimpulan</h2>
+<p>WebGIS SPBU memenuhi kebutuhan utama proyek website interaktif berbasis tim, yaitu penggunaan frontend HTML/CSS/JavaScript, backend PHP CodeIgniter, database PostgreSQL, fitur autentikasi, dashboard, CRUD, validasi, tampilan responsif, dan API. Dokumentasi ini menjadi dasar kebutuhan sistem dan dapat dilengkapi dengan hasil pengujian, screenshot, anggota tim, serta link Google Docs sebelum pengumpulan UTS.</p>
+
+</body>
+</html>

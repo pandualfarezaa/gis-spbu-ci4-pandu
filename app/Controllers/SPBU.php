@@ -135,9 +135,8 @@ public function InsertData()
         ],
         'foto' => [
             'label' => 'Foto SPBU',
-            'rules' => 'uploaded[foto]|max_size[foto,1024]|mime_in[foto,image/jpg,image/jpeg,image/png]',
+            'rules' => 'max_size[foto,1024]|mime_in[foto,image/jpg,image/jpeg,image/png]',
             'errors' => [
-                'uploaded' => '{field} Wajib Diisi !!',
                 'max_size' => 'Ukuran {field} maksimal 1024 KB !!',
                 'mime_in' => 'Format {field} Harus JPG, JPEG, PNG !!',
             ]
@@ -145,7 +144,12 @@ public function InsertData()
     ])) {
         // JIKA VALIDASI BERHASIL
         $foto = $this->request->getFile('foto');
-        $nama_file_foto = $foto->getRandomName();
+        $nama_file_foto = '1.png';
+
+        if ($foto && $foto->isValid() && ! $foto->hasMoved()) {
+            $nama_file_foto = $foto->getRandomName();
+            $foto->move(FCPATH . 'foto', $nama_file_foto);
+        }
 
         $data = [
             'nama_spbu'    => $this->request->getPost('nama_spbu'),
@@ -157,13 +161,12 @@ public function InsertData()
             'id_kabupaten' => $this->request->getPost('id_kabupaten'),
             'id_kecamatan' => $this->request->getPost('id_kecamatan'),
             'alamat'       => $this->request->getPost('alamat'),
+            'status'       => $this->request->getPost('status'),
+            'rest_area'    => $this->request->getPost('rest_area'),
             'lokasi'       => $this->request->getPost('koordinat'), 
             'id_wilayah'   => $this->request->getPost('id_wilayah'),
             'foto'         => $nama_file_foto,
         ];
-
-        // Pindahkan file gambar fisik ke folder public/foto/
-        $foto->move('foto', $nama_file_foto);
 
         $db = \Config\Database::connect();
         $db->table('tbl_spbu')->insert($data);
@@ -186,16 +189,17 @@ public function UpdateData($id_spbu)
     $foto = $this->request->getFile('foto');
 
     // Cek apakah user mengupload foto baru atau tidak
-    if ($foto->getError() == 4) {
+    if (! $foto || $foto->getError() === UPLOAD_ERR_NO_FILE) {
         // Jika tidak upload foto baru, pakai nama foto yang lama
-        $nama_file_foto = $spbu_lama['foto'];
+        $nama_file_foto = $spbu_lama['foto'] ?: '1.png';
     } else {
         // Jika upload foto baru, acak nama baru dan hapus file foto lama di folder lokal
         $nama_file_foto = $foto->getRandomName();
-        if (file_exists('foto/' . $spbu_lama['foto'])) {
-            unlink('foto/' . $spbu_lama['foto']);
+        $fotoLama = FCPATH . 'foto' . DIRECTORY_SEPARATOR . ($spbu_lama['foto'] ?? '');
+        if (is_file($fotoLama)) {
+            unlink($fotoLama);
         }
-        $foto->move('foto', $nama_file_foto);
+        $foto->move(FCPATH . 'foto', $nama_file_foto);
     }
 
     $data = [
@@ -299,8 +303,9 @@ public function Delete($id_spbu)
     // 1. Ambil data SPBU untuk menghapus file foto fisiknya agar tidak nyampah di hosting/lokal
     $spbu = $db->table('tbl_spbu')->where('id_spbu', $id_spbu)->get()->getRowArray();
     
-    if (file_exists('foto/' . $spbu['foto'])) {
-        unlink('foto/' . $spbu['foto']);
+    $fotoPath = FCPATH . 'foto' . DIRECTORY_SEPARATOR . ($spbu['foto'] ?? '');
+    if (is_file($fotoPath)) {
+        unlink($fotoPath);
     }
 
     // 2. Eksekusi hapus data dari database berdasarkan ID SPBU
