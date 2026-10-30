@@ -3,7 +3,7 @@
         <div class="card-header">
             <h3 class="card-title"><?= isset($judul) ? $judul : 'Detail SPBU' ?></h3>
             <div class="card-tools">
-                <a href="<?= base_url('admin/spbu') ?>" class="btn btn-flat btn-warning btn-sm">
+                <a href="<?= base_url(!empty($public) ? 'home' : 'admin/spbu') ?>" class="btn btn-flat btn-warning btn-sm">
                     <i class="fas fa-arrow-left"></i> Kembali
                 </a>
             </div>

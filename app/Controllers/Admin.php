@@ -24,14 +24,7 @@ class Admin extends BaseController
 
      public function setting(): string
     {
-        $settingData = $this->ModelSetting->DataSpbu();
-
-        // 🟢 JIKA DATA BERBENTUK BANYAK BARIS, AMBIL BARIS PERTAMA (INDEKS 0)
-        if (isset($settingData[0])) {
-            $spbuData = $settingData[0];
-        } else {
-            $spbuData = $settingData;
-        }
+        $settingData = $this->ModelSetting->DataSetting() ?? [];
 
         $data = [
             'judul' => 'Setting',
@@ -39,9 +32,9 @@ class Admin extends BaseController
             'page'  => 'v_setting',
             // 🟢 BERIKAN NILAI CADANGAN KOSONG AGAR JIKA DATABASE KOSONG TIDAK EROR
             'spbu'  => [
-                'nama_spbu'         => $spbuData['nama_spbu'] ?? '',
-                'coordinat_wilayah' => $spbuData['coordinat_wilayah'] ?? $spbuData['koordinat_wilayah'] ?? '', 
-                'zoom_view'         => $spbuData['zoom_view'] ?? '10',
+                'nama_spbu'         => $settingData['nama_spbu'] ?? '',
+                'coordinat_wilayah' => $settingData['coordinat_wilayah'] ?? $settingData['koordinat_wilayah'] ?? '',
+                'zoom_view'         => $settingData['zoom_view'] ?? '10',
             ],
         ];
         return view('v_template_back_end', $data);

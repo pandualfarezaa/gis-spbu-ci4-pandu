@@ -24,6 +24,8 @@ public function AllData()
    public function DetailData($id_spbu)
    {
         return $this->db->table('tbl_spbu')
+                ->select('tbl_spbu.*, tbl_jenis.jenis, tbl_jenis.marker')
+                ->join('tbl_jenis', 'tbl_jenis.id_jenis = tbl_spbu.id_jenis', 'left')
                 ->where('id_spbu', $id_spbu)
                 ->get()->getRowArray();
    }
