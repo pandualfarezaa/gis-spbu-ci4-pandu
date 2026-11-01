@@ -128,6 +128,10 @@ Pastikan perangkat sudah memiliki:
 
 ![Halaman jenis SPBU](dokumen/screenshots/07-jenis-spbu.png)
 
+### Contoh Respons REST API
+
+![Contoh respons REST API SPBU](dokumen/screenshots/08-api-spbu.png)
+
 Screenshot yang disertakan meliputi:
 
 - Halaman utama peta WebGIS.
